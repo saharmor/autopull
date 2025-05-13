@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Extract Issues",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/extract_issues.py",
+            "args": [
+                "--no-token"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
+        }
+    ]
+}

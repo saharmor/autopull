@@ -30,10 +30,18 @@ def parse_github_url(url):
 def get_all_issues(repo_owner, repo_name):
     """Get all open issues from a GitHub repository."""
     url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/issues"
-    headers = {"Accept": "application/vnd.github.v3+json"}
+    headers = {
+        "Accept": "application/vnd.github.v3+json",
+        "User-Agent": "GitHub-Issues-Extractor"  # Adding User-Agent which is often required
+    }
     
     if GITHUB_TOKEN:
+        # GitHub API accepts both "token" and "Bearer" prefix
+        # Fine-grained PATs might require "Bearer" format
         headers["Authorization"] = f"token {GITHUB_TOKEN}"
+        print(f"Using GitHub token: {GITHUB_TOKEN[:4]}{'*' * (len(GITHUB_TOKEN) - 8)}{GITHUB_TOKEN[-4:]}", file=sys.stderr)
+    else:
+        print("Warning: No GitHub token found. API rate limits will be lower.", file=sys.stderr)
     
     all_issues = []
     page = 1
@@ -41,7 +49,19 @@ def get_all_issues(repo_owner, repo_name):
     while True:
         params = {"state": "open", "page": page, "per_page": 100}
         try:
+            print(f"Requesting: {url} (page {page})", file=sys.stderr)
             response = requests.get(url, headers=headers, params=params)
+            
+            # Debug info to help troubleshoot
+            print(f"Status code: {response.status_code}", file=sys.stderr)
+            
+            # If unauthorized with "token" format, try again with "Bearer" format
+            if response.status_code == 401 and GITHUB_TOKEN:
+                print("Trying with Bearer token format instead...", file=sys.stderr)
+                headers["Authorization"] = f"Bearer {GITHUB_TOKEN}"
+                response = requests.get(url, headers=headers, params=params)
+                print(f"Status code with Bearer format: {response.status_code}", file=sys.stderr)
+            
             response.raise_for_status()
             issues = response.json()
             
@@ -53,6 +73,7 @@ def get_all_issues(repo_owner, repo_name):
             
         except requests.exceptions.RequestException as e:
             print(f"Error fetching issues: {e}", file=sys.stderr)
+            print(f"Response content: {response.text if 'response' in locals() else 'No response'}", file=sys.stderr)
             sys.exit(1)
     
     return all_issues
@@ -60,7 +81,10 @@ def get_all_issues(repo_owner, repo_name):
 def get_issue_comments(repo_owner, repo_name, issue_number):
     """Get all comments for a specific issue."""
     url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/issues/{issue_number}/comments"
-    headers = {"Accept": "application/vnd.github.v3+json"}
+    headers = {
+        "Accept": "application/vnd.github.v3+json",
+        "User-Agent": "GitHub-Issues-Extractor"  # Adding User-Agent which is often required
+    }
     
     if GITHUB_TOKEN:
         headers["Authorization"] = f"token {GITHUB_TOKEN}"
@@ -72,6 +96,12 @@ def get_issue_comments(repo_owner, repo_name, issue_number):
         params = {"page": page, "per_page": 100}
         try:
             response = requests.get(url, headers=headers, params=params)
+            
+            # If unauthorized with "token" format, try again with "Bearer" format
+            if response.status_code == 401 and GITHUB_TOKEN:
+                headers["Authorization"] = f"Bearer {GITHUB_TOKEN}"
+                response = requests.get(url, headers=headers, params=params)
+            
             response.raise_for_status()
             comments = response.json()
             
@@ -177,13 +207,13 @@ Issues:
             "Authorization": f"Bearer {OPENAI_API_KEY}"
         }
         data = {
-            "model": "gpt-3.5-turbo",
+            "model": "gpt-4.1-mini",
             "messages": [
                 {"role": "system", "content": "You are a helpful assistant that analyzes GitHub issues to find the best first issues for newcomers."},
                 {"role": "user", "content": prompt}
             ],
             "temperature": 0.5,
-            "max_tokens": 500
+            "max_tokens": 5000
         }
         
         response = requests.post(url, headers=headers, json=data)
@@ -211,7 +241,14 @@ def main():
                         help='GitHub repository URL, e.g., https://github.com/owner/repo (default: https://github.com/saharmor/cursor-view)')
     parser.add_argument('--output', '-o', default='issues.json', help='Output JSON file path (default: issues.json)')
     parser.add_argument('--no-llm', action='store_true', help='Skip LLM recommendation')
+    parser.add_argument('--no-token', action='store_true', help='Skip using GitHub token (useful for public repositories)')
     args = parser.parse_args()
+    
+    # Override token if --no-token is set
+    global GITHUB_TOKEN
+    if args.no_token:
+        print("Skipping GitHub token as requested.", file=sys.stderr)
+        GITHUB_TOKEN = None
     
     try:
         repo_owner, repo_name = parse_github_url(args.repo_url)
