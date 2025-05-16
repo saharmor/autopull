@@ -6,12 +6,18 @@ const AuthContext = createContext(null);
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [repositories, setRepositories] = useState([]);
+  const [loadingRepos, setLoadingRepos] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const userData = await authApi.getCurrentUser();
         setUser(userData);
+        
+        if (userData) {
+          fetchRepositories();
+        }
       } catch (error) {
         console.error('Error fetching user:', error);
       } finally {
@@ -22,13 +28,29 @@ export const AuthProvider = ({ children }) => {
     fetchUser();
   }, []);
 
-  const login = async (code) => {
+  const fetchRepositories = async () => {
+    setLoadingRepos(true);
     try {
-      const userData = await authApi.loginWithGitHub(code);
+      const repoData = await authApi.getUserRepositories();
+      setRepositories(repoData.repositories);
+    } catch (error) {
+      console.error('Error fetching repositories:', error);
+    } finally {
+      setLoadingRepos(false);
+    }
+  };
+
+  const initiateGitHubLogin = () => {
+    window.location.href = '/api/auth/github';
+  };
+
+  const completeGitHubAuth = async (userId) => {
+    try {
+      const userData = await authApi.completeGitHubAuth(userId);
       setUser(userData);
       return userData;
     } catch (error) {
-      console.error('Error logging in:', error);
+      console.error('Error completing GitHub auth:', error);
       throw error;
     }
   };
@@ -37,24 +59,23 @@ export const AuthProvider = ({ children }) => {
     try {
       await authApi.logout();
       setUser(null);
+      setRepositories([]);
     } catch (error) {
       console.error('Error logging out:', error);
       throw error;
     }
   };
 
-  const getGitHubLoginUrl = async () => {
-    try {
-      const { url } = await authApi.getGitHubLoginUrl();
-      return url;
-    } catch (error) {
-      console.error('Error getting GitHub login URL:', error);
-      throw error;
-    }
-  };
-
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout, getGitHubLoginUrl }}>
+    <AuthContext.Provider value={{ 
+      user, 
+      loading, 
+      repositories,
+      loadingRepos,
+      initiateGitHubLogin,
+      completeGitHubAuth,
+      logout 
+    }}>
       {children}
     </AuthContext.Provider>
   );

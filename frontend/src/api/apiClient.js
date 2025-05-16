@@ -11,13 +11,8 @@ const apiClient = axios.create({
 
 // Authentication API
 export const authApi = {
-  getGitHubLoginUrl: async () => {
-    const response = await apiClient.get('/auth/github-login-url');
-    return response.data;
-  },
-  
-  loginWithGitHub: async (code) => {
-    const response = await apiClient.post('/auth/github', { code });
+  completeGitHubAuth: async (userId) => {
+    const response = await apiClient.post('/auth/github-token', { code: userId });
     return response.data;
   },
   
@@ -31,6 +26,11 @@ export const authApi = {
       }
       throw error;
     }
+  },
+  
+  getUserRepositories: async () => {
+    const response = await apiClient.get('/auth/repositories');
+    return response.data;
   },
   
   logout: async () => {

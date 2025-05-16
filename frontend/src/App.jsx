@@ -4,6 +4,8 @@ import { AuthProvider } from './context/AuthContext';
 // Import pages
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
+import AuthCallbackPage from './pages/AuthCallbackPage';
+import RepositoriesPage from './pages/RepositoriesPage';
 import ScanPage from './pages/ScanPage';
 import ImplementationPage from './pages/ImplementationPage';
 
@@ -19,6 +21,8 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/auth-callback" element={<AuthCallbackPage />} />
+            <Route path="/repositories" element={<RepositoriesPage />} />
             <Route path="/scan/:scanId" element={<ScanPage />} />
             <Route path="/implement/:implementationId" element={<ImplementationPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />

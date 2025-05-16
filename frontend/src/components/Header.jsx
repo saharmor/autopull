@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const Header = () => {
   const { user, logout } = useAuth();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const location = useLocation();
 
   const handleLogout = async () => {
     setIsLoggingOut(true);
@@ -27,18 +28,37 @@ const Header = () => {
         
         <div className="flex items-center">
           {user ? (
-            <div className="flex items-center">
-              <span className="mr-4">
-                Welcome, {user.github_username}
-              </span>
-              <button
-                onClick={handleLogout}
-                disabled={isLoggingOut}
-                className="px-4 py-2 rounded bg-white text-indigo-600 hover:bg-indigo-100 transition-colors"
-              >
-                {isLoggingOut ? 'Logging out...' : 'Logout'}
-              </button>
-            </div>
+            <>
+              <nav className="mr-6">
+                <ul className="flex space-x-4">
+                  <li>
+                    <Link 
+                      to="/repositories" 
+                      className={`px-3 py-2 rounded ${
+                        location.pathname === '/repositories' 
+                          ? 'bg-white text-indigo-600' 
+                          : 'text-white hover:bg-white/10'
+                      }`}
+                    >
+                      My Repositories
+                    </Link>
+                  </li>
+                </ul>
+              </nav>
+              <div className="flex items-center">
+                <span className="mr-4 flex items-center">
+                  <span className="hidden sm:inline">Welcome,</span>{' '}
+                  <span className="font-medium ml-1">{user.github_username}</span>
+                </span>
+                <button
+                  onClick={handleLogout}
+                  disabled={isLoggingOut}
+                  className="px-4 py-2 rounded bg-white text-indigo-600 hover:bg-indigo-100 transition-colors"
+                >
+                  {isLoggingOut ? 'Logging out...' : 'Logout'}
+                </button>
+              </div>
+            </>
           ) : (
             <Link to="/login" className="px-4 py-2 rounded bg-white text-indigo-600 hover:bg-indigo-100 transition-colors">
               Login with GitHub
