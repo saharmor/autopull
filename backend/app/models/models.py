@@ -11,6 +11,7 @@ class Repository(BaseModel):
     name: str
     full_name: str
     url: str
+    description: Optional[str] = None
 
 class Issue(BaseModel):
     id: int
