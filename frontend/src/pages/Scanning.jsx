@@ -78,9 +78,6 @@ export default function Scanning() {
           
           {selectedRepo && (
             <div className="inline-flex items-center bg-white/10 rounded-full px-3 py-1 text-white text-sm">
-              <svg className="h-4 w-4 mr-1.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
-              </svg>
               <span className="font-medium">{selectedRepo.full_name}</span>
             </div>
           )}
@@ -95,13 +92,6 @@ export default function Scanning() {
                 <div className="flex items-center justify-between mb-2">
                   <div>
                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
-                      <svg className="-ml-0.5 mr-1 h-3.5 w-3.5 text-primary-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                        {scanStatus === 'completed' ? (
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                        ) : (
-                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
-                        )}
-                      </svg>
                       {scanStatus === 'completed' ? 'Completed' : 'In Progress'}
                     </span>
                   </div>
@@ -124,9 +114,7 @@ export default function Scanning() {
                   <div key={step.id} className="flex items-center">
                     <div className={`flex-shrink-0 h-6 w-6 rounded-full flex items-center justify-center ${step.completed ? 'bg-green-100' : 'bg-gray-100'}`}>
                       {step.completed ? (
-                        <svg className="h-4 w-4 text-green-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                        </svg>
+                        <CheckIcon />
                       ) : (
                         <div className="h-3 w-3 rounded-full bg-gray-300"></div>
                       )}
@@ -159,21 +147,15 @@ export default function Scanning() {
                   <h4 className="text-xs font-semibold text-gray-700 mb-1.5">What we're looking for:</h4>
                   <ul className="space-y-1.5">
                     <li className="text-xs text-gray-600 flex items-start">
-                      <svg className="h-4 w-4 text-green-500 mr-1.5 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                      </svg>
+                      <CheckIcon />
                       <span>Simple bug fixes and code improvements</span>
                     </li>
                     <li className="text-xs text-gray-600 flex items-start">
-                      <svg className="h-4 w-4 text-green-500 mr-1.5 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                      </svg>
+                      <CheckIcon />
                       <span>Documentation updates and enhancements</span>
                     </li>
                     <li className="text-xs text-gray-600 flex items-start">
-                      <svg className="h-4 w-4 text-green-500 mr-1.5 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                      </svg>
+                      <CheckIcon />
                       <span>Performance optimizations</span>
                     </li>
                   </ul>
