@@ -7,10 +7,10 @@ export const PageContainer = ({
 }) => {
   return (
     <div 
-      className={`flex flex-col items-center justify-center bg-gradient-facebook ${className}`}
+      className={`flex flex-col items-center justify-center min-h-screen w-full bg-gradient-facebook ${className}`}
       {...props}
     >
-      <div className="w-full max-w-4xl px-4">
+      <div className="w-full max-w-6xl px-4 mx-auto">
         {children}
       </div>
     </div>

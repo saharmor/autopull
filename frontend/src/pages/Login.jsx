@@ -18,7 +18,7 @@ export default function Login() {
 
   return (
     <PageContainer>
-      <div className="w-full max-w-md space-y-6 px-4 mx-auto">
+      <div className="w-full space-y-6 flex flex-col items-center">
         <div className="flex flex-col items-center">
           <h2 className="text-center text-3xl font-bold text-facebook-blue">
             AutoPull
@@ -28,7 +28,7 @@ export default function Login() {
           </p>
         </div>
         
-        <Card>
+        <Card className="w-full max-w-md">
           <CardHeader>
             <CardTitle>Get Started</CardTitle>
             <CardDescription>
