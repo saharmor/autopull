@@ -11,7 +11,7 @@ export default function Layout({ children }) {
           <div className="flex items-center space-x-2.5">
             <Logo className="h-6 w-6 text-white" /> {/* Ensured logo SVG can inherit text color if needed */}
             <h1 className="text-xl font-bold text-white"> {/* Changed title text color */}
-              Viral Devin
+              AutoPull
             </h1>
           </div>
           {user && (
@@ -21,7 +21,7 @@ export default function Layout({ children }) {
                   <img 
                     src={user.avatar_url} 
                     alt="User avatar" 
-                    className="h-7 w-7 rounded-full border-2 border-primary-300" /* Adjusted border */
+                    className="h-7 w-80 rounded-full border-2 border-primary-300" /* Adjusted border */
                   />
                 )}
                 <span className="text-sm font-medium text-primary-100"> {/* Changed username text color */}
@@ -46,10 +46,10 @@ export default function Layout({ children }) {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center space-x-2">
               <Logo className="h-5 w-5" />
-              <span className="text-xs font-medium">Viral Devin</span>
+              <span className="text-xs font-medium">AutoPull</span>
             </div>
             <div className="mt-2 md:mt-0 text-xs text-gray-400">
-              © {new Date().getFullYear()} Viral Devin. All rights reserved.
+              © {new Date().getFullYear()} AutoPull. All rights reserved.
             </div>
           </div>
         </div>

@@ -21,7 +21,7 @@ export default function Login() {
       <div className="w-full max-w-md space-y-6 px-4 mx-auto">
         <div className="flex flex-col items-center">
           <h2 className="text-center text-3xl font-bold text-facebook-blue">
-            Viral Devin
+            AutoPull
           </h2>
           <p className="mt-2 text-center text-sm">
             Automate GitHub issue fixes with AI coding agents
