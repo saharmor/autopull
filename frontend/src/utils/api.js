@@ -2,29 +2,34 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost:8000/api';
 
+// Create an axios instance with default config
+const axiosInstance = axios.create({
+  withCredentials: true, // Always include credentials for all requests
+});
+
 export const api = {
   // Auth endpoints
   getGithubAuthUrl: () => `${API_URL}/auth/github`,
   
   verifyUser: (userId) => 
-    axios.post(`${API_URL}/auth/github-token`, { code: userId }),
+    axiosInstance.post(`${API_URL}/auth/github-token`, { code: userId }),
   
   getRepositories: () => 
-    axios.get(`${API_URL}/auth/repositories`, { withCredentials: true }),
+    axiosInstance.get(`${API_URL}/auth/repositories`),
   
   logout: () => 
-    axios.post(`${API_URL}/auth/logout`, {}, { withCredentials: true }),
+    axiosInstance.post(`${API_URL}/auth/logout`, {}),
   
   // Repository endpoints
   scanRepository: (repositoryUrl) => 
-    axios.post(`${API_URL}/repositories/scan`, { repository_url: repositoryUrl }),
+    axiosInstance.post(`${API_URL}/repositories/scan`, { repository_url: repositoryUrl }),
   
   getScanStatus: (scanId) => 
-    axios.get(`${API_URL}/repositories/scan/${scanId}`),
+    axiosInstance.get(`${API_URL}/repositories/scan/${scanId}`),
   
   implementIssue: (scanId, issueId) => 
-    axios.post(`${API_URL}/repositories/implement`, { scan_id: scanId, issue_id: issueId }),
+    axiosInstance.post(`${API_URL}/repositories/implement`, { scan_id: scanId, issue_id: issueId }),
   
   getImplementationStatus: (implementationId) => 
-    axios.get(`${API_URL}/repositories/implement/${implementationId}`)
+    axiosInstance.get(`${API_URL}/repositories/implement/${implementationId}`)
 };

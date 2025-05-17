@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from 'react-router-dom'; // Added Outlet
 import { AppProvider, useAppContext } from './context/AppContext';
 import './App.css';
 
@@ -21,51 +21,44 @@ const ProtectedRoute = ({ children }) => {
   return children;
 };
 
+// New component to apply Layout to protected routes
+const MainAppLayout = () => {
+  return (
+    <Layout>
+      <Outlet /> {/* Child protected routes will render here */}
+    </Layout>
+  );
+};
+
 function AppRoutes() {
   return (
     <Routes>
+      {/* Routes without the main Layout */}
       <Route path="/login" element={<Login />} />
       <Route path="/auth-callback" element={<AuthCallback />} />
       
-      <Route path="/" element={
-        <ProtectedRoute>
-          <RepositorySelection />
-        </ProtectedRoute>
-      } />
+      {/* Protected routes with the main Layout */}
+      <Route element={<ProtectedRoute><MainAppLayout /></ProtectedRoute>}>
+        <Route path="/" element={<RepositorySelection />} />
+        <Route path="/scanning/:scanId" element={<Scanning />} />
+        <Route path="/issues/:scanId" element={<IssueSelection />} />
+        <Route path="/implementing/:implementationId" element={<Implementing />} />
+        <Route path="/celebration/:implementationId" element={<Celebration />} />
+      </Route>
       
-      <Route path="/scanning/:scanId" element={
-        <ProtectedRoute>
-          <Scanning />
-        </ProtectedRoute>
-      } />
-      
-      <Route path="/issues/:scanId" element={
-        <ProtectedRoute>
-          <IssueSelection />
-        </ProtectedRoute>
-      } />
-      
-      <Route path="/implementing/:implementationId" element={
-        <ProtectedRoute>
-          <Implementing />
-        </ProtectedRoute>
-      } />
-      
-      <Route path="/celebration/:implementationId" element={
-        <ProtectedRoute>
-          <Celebration />
-        </ProtectedRoute>
-      } />
-      
-      <Route path="*" element={<Navigate to="/" replace />} />
+      {/* Catch-all for unauthenticated users or non-existent paths - might redirect to login if / is protected effectively */}
+      <Route path="*" element={<Navigate to="/login" replace />} /> 
     </Routes>
   );
 }
+
+import Layout from './components/Layout';
 
 function App() {
   return (
     <Router>
       <AppProvider>
+        {/* Layout is now applied conditionally within AppRoutes */}
         <AppRoutes />
       </AppProvider>
     </Router>

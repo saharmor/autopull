@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
-import Layout from '../components/Layout';
+
 import ErrorMessage from '../components/ErrorMessage';
 
 export default function Implementing() {
@@ -100,9 +100,8 @@ export default function Implementing() {
   }, [codeText, progress]);
   
   return (
-    <Layout>
       <div className="max-w-4xl mx-auto">
-        <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl shadow-lg p-6 mb-8 text-center">
+        <div className="bg-primary-700 rounded-xl shadow-lg p-6 mb-8 text-center">
           <h2 className="text-3xl font-bold text-white mb-2">
             Implementing Solution
           </h2>
@@ -125,7 +124,7 @@ export default function Implementing() {
               {selectedIssue && (
                 <div className="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-100">
                   <div className="flex items-center mb-2">
-                    <svg className="h-5 w-5 text-indigo-600 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <svg className="h-5 w-5 text-primary-600 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
                     </svg>
                     <h3 className="text-md font-bold text-gray-800">Issue Details</h3>
@@ -139,8 +138,8 @@ export default function Implementing() {
               <div className="mb-6">
                 <div className="flex items-center justify-between mb-2">
                   <div>
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-indigo-100 text-indigo-800">
-                      <svg className="-ml-1 mr-1.5 h-4 w-4 text-indigo-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 text-primary-800">
+                      <svg className="-ml-1 mr-1.5 h-4 w-4 text-primary-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                         {implementationStatus === 'completed' ? (
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         ) : (
@@ -151,7 +150,7 @@ export default function Implementing() {
                     </span>
                   </div>
                   <div className="text-right">
-                    <span className="text-sm font-semibold text-indigo-600">
+                    <span className="text-sm font-semibold text-primary-600">
                       {progress}%
                     </span>
                   </div>
@@ -159,7 +158,7 @@ export default function Implementing() {
                 <div className="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
                   <div 
                     style={{ width: `${progress}%` }}
-                    className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 transition-all duration-500"
+                    className="h-full bg-primary-600 transition-all duration-500"
                   ></div>
                 </div>
               </div>
@@ -189,8 +188,8 @@ export default function Implementing() {
             <div className="bg-white shadow-lg rounded-xl p-6 border border-gray-100 h-full">
               <div className="flex flex-col h-full">
                 <div className="flex items-center mb-4">
-                  <div className="rounded-full bg-gradient-to-r from-indigo-100 to-purple-100 h-12 w-12 flex items-center justify-center mr-4">
-                    <svg className="h-6 w-6 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <div className="rounded-full bg-primary-100 h-12 w-12 flex items-center justify-center mr-4">
+                    <svg className="h-6 w-6 text-primary-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                     </svg>
                   </div>
@@ -233,6 +232,7 @@ export default function Implementing() {
           </div>
         </div>
       </div>
-    </Layout>
+    
   );
+
 }

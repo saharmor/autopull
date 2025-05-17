@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
-import Layout from '../components/Layout';
+
 import ErrorMessage from '../components/ErrorMessage';
 
 export default function Scanning() {
@@ -70,9 +70,8 @@ export default function Scanning() {
   }, [scanId, checkScanStatus, navigate, scanSteps]);
   
   return (
-    <Layout>
       <div className="max-w-4xl mx-auto">
-        <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg shadow-md p-5 mb-6 text-center">
+        <div className="bg-primary-700 rounded-lg shadow-md p-5 mb-6 text-center">
           <h2 className="text-2xl font-bold text-white mb-1.5">
             Scanning Repository
           </h2>
@@ -95,8 +94,8 @@ export default function Scanning() {
               <div className="mb-5">
                 <div className="flex items-center justify-between mb-2">
                   <div>
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
-                      <svg className="-ml-0.5 mr-1 h-3.5 w-3.5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
+                      <svg className="-ml-0.5 mr-1 h-3.5 w-3.5 text-primary-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                         {scanStatus === 'completed' ? (
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         ) : (
@@ -107,7 +106,7 @@ export default function Scanning() {
                     </span>
                   </div>
                   <div className="text-right">
-                    <span className="text-xs font-medium text-indigo-600">
+                    <span className="text-xs font-medium text-primary-600">
                       {progress}%
                     </span>
                   </div>
@@ -115,7 +114,7 @@ export default function Scanning() {
                 <div className="h-1.5 w-full bg-gray-200 rounded-full overflow-hidden">
                   <div 
                     style={{ width: `${progress}%` }}
-                    className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 transition-all duration-500"
+                    className="h-full bg-primary-600 transition-all duration-500"
                   ></div>
                 </div>
               </div>
@@ -144,8 +143,8 @@ export default function Scanning() {
           <div>
             <div className="bg-white shadow-md rounded-lg p-5 border border-gray-100 h-full">
               <div className="flex flex-col items-center">
-                <div className="rounded-full bg-gradient-to-r from-indigo-100 to-purple-100 h-16 w-16 flex items-center justify-center mb-4">
-                  <svg className="h-8 w-8 text-indigo-600 animate-pulse" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div className="rounded-full bg-primary-100 h-16 w-16 flex items-center justify-center mb-4">
+                  <svg className="h-8 w-8 text-primary-600 animate-pulse" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m0 16v1m-9-9h1m16 0h1m-2.947-7.053l-.708.708M5.657 18.343l-.708.708m14.095-12.728l-.707.707M6.343 17.657l-.707.707" />
                   </svg>
                 </div>
@@ -184,6 +183,7 @@ export default function Scanning() {
           </div>
         </div>
       </div>
-    </Layout>
+    
   );
+
 }

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
-import Layout from '../components/Layout';
+
 import ErrorMessage from '../components/ErrorMessage';
 import Loading from '../components/Loading';
 
@@ -35,9 +35,8 @@ export default function IssueSelection() {
   };
   
   return (
-    <Layout>
       <div className="max-w-4xl mx-auto">
-        <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl shadow-lg p-6 mb-8 text-center">
+        <div className="bg-primary-700 rounded-xl shadow-lg p-6 mb-8 text-center">
           <h2 className="text-3xl font-bold text-white mb-2">
             Select an Issue to Implement
           </h2>
@@ -77,7 +76,7 @@ export default function IssueSelection() {
             <div className="bg-white shadow-lg rounded-xl p-6 border border-gray-100 mb-6">
               <div className="flex items-center justify-between">
                 <h3 className="text-lg font-bold text-gray-800">
-                  <span className="text-indigo-600">{issues.length}</span> Issues Found
+                  <span className="text-primary-600">{issues.length}</span> Issues Found
                 </h3>
                 <div className="text-sm text-gray-500">
                   Click on an issue to implement it
@@ -89,7 +88,7 @@ export default function IssueSelection() {
               {issues.map((issue) => (
                 <div 
                   key={issue.id} 
-                  className="bg-white shadow-lg rounded-xl border border-gray-100 overflow-hidden transition-all duration-200 hover:shadow-xl hover:border-indigo-200"
+                  className="bg-white shadow-lg rounded-xl border border-gray-100 overflow-hidden transition-all duration-200 hover:shadow-xl hover:border-primary-200"
                 >
                   <div className="p-6">
                     <div className="flex flex-col">
@@ -98,8 +97,8 @@ export default function IssueSelection() {
                           {issue.title}
                         </h3>
                         <div className="flex gap-2 flex-shrink-0">
-                          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                            <svg className="-ml-0.5 mr-1.5 h-3 w-3 text-blue-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
+                            <svg className="-ml-0.5 mr-1.5 h-3 w-3 text-primary-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                               <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
                             </svg>
                             {issue.complexity}
@@ -126,7 +125,7 @@ export default function IssueSelection() {
                         </div>
                         <button
                           onClick={() => handleIssueSelect(issue)}
-                          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-200"
+                          className="btn btn-primary inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg shadow-sm transition-all duration-200"
                         >
                           <svg className="-ml-1 mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                             <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
@@ -142,6 +141,7 @@ export default function IssueSelection() {
           </div>
         )}
       </div>
-    </Layout>
+    
   );
+
 }
