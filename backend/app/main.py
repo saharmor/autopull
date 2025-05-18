@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from .routers import repositories, auth
 
 app = FastAPI(
-    title="Viral Devin",
+    title="AutoPull",
     description="A platform that helps users find and implement 'low-hanging fruit' issues in GitHub repositories using coding agents.",
     version="0.1.0",
 )
@@ -24,7 +24,7 @@ app.include_router(repositories.router)
 @app.get("/")
 async def root():
     return {
-        "message": "Welcome to the Viral Devin API",
+        "message": "Welcome to the AutoPull API",
     }
 
 if __name__ == "__main__":

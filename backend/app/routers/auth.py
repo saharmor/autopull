@@ -24,7 +24,7 @@ else:
 # Get GitHub OAuth credentials from environment variables or use mock values for testing
 GITHUB_CLIENT_ID = os.environ.get("GITHUB_CLIENT_ID", "mock_client_id")
 GITHUB_CLIENT_SECRET = os.environ.get("GITHUB_CLIENT_SECRET", "mock_client_secret")
-FRONTEND_URL = "http://localhost:5174"
+FRONTEND_URL = "http://localhost:5173"
 
 # For mock mode, we'll use a flag to determine if we're using real GitHub or mocks
 USE_MOCK_GITHUB = not (os.environ.get("GITHUB_CLIENT_ID") and os.environ.get("GITHUB_CLIENT_SECRET")) or GITHUB_CLIENT_ID == "mock_client_id"
@@ -195,15 +195,17 @@ async def set_github_token(auth_request: GitHubAuthRequest, response: Response):
             )
         
         user = mock_users[auth_request.code]
+        logger.info(f"Setting cookie for user: {user['github_username']} with ID: {auth_request.code}")
         
         # Set a cookie for session management
         response.set_cookie(
             key="user_id",
-            value=user["id"],
+            value=auth_request.code,
             httponly=True,
-            max_age=3600*24,  # 24 hours
+            max_age=3600,  # 1 hour
+            samesite="lax",
             secure=False,  # Set to True in production with HTTPS
-            samesite="lax"
+            path="/"  # Make cookie available for all paths
         )
         
         return {
